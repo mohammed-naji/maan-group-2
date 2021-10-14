@@ -1,16 +1,62 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Models\Comment;
+use App\Models\Post;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    // return Product::all();
-    $products = Product::all();
-    return view('welcome', compact('products'));
+
+Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+{
+
+    Route::get('/', function () {
+        // return Product::all();
+        // $products = Product::all();
+
+
+        // $post = Post::find(1);
+        // $post->comments()->create([
+        //     'user_id' => 3,
+        //     'comment' => 'this is another test comment'
+        // ]);
+        // return $post->comments;
+
+        // Comment::where('parent_id', $post->id)->where('parent_type', 'post')->get();
+
+        // $product = Product::find(1);
+
+        // $product->comments()->create([
+        //     'user_id' => 3,
+        //     'comment' => 'This is comment for produnct'
+        // ]);
+
+        // return $product->comments;
+
+        $user = User::find(1);
+        // $user->courses()->attach([1,2]);
+        // $user->courses()->detach([1,2]);
+        $user->courses()->sync([1, 5]);
+
+
+        return $user;
+
+
+        // return view('welcome', compact('products'));
+    });
+
+    Route::get('export', [HomeController::class, 'export']);
+    Route::post('import', [HomeController::class, 'import'])->name('import');
+
+    Route::get('image', [HomeController::class, 'image'])->name('image');
+    Route::post('image', [HomeController::class, 'imageSubmit']);
+
+    Route::get('blog', [HomeController::class, 'blog']);
+
 });
 
-Route::get('export', [HomeController::class, 'export']);
+// /post/{id}/comments/{user}
 
-
-Route::post('import', [HomeController::class, 'import'])->name('import');
+// url( '/post//' . id . '/comments//' . user );
+// route('user_comments', [id, user]);
