@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Models\Comment;
 use App\Models\Post;
-use App\Models\Product;
 use App\Models\User;
+use App\Models\Comment;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
@@ -53,6 +54,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     Route::post('image', [HomeController::class, 'imageSubmit']);
 
     Route::get('blog', [HomeController::class, 'blog']);
+
+    Route::resource('posts', PostController::class);
 
 });
 
