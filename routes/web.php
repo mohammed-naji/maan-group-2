@@ -56,6 +56,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     Route::get('blog', [HomeController::class, 'blog']);
 
     Route::resource('posts', PostController::class);
+    Route::get('getData', [PostController::class, 'getData'])->name('posts.getData');
 
 });
 

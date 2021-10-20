@@ -83,4 +83,9 @@ class PostController extends Controller
     {
         //
     }
+
+    public function getData()
+    {
+        return Post::all();
+    }
 }

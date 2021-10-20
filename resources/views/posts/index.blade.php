@@ -21,7 +21,19 @@
                 </form>
             </div>
             <div class="col-8">
-                Data
+                <table class="table table-bordered" id="table_data">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -31,6 +43,29 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
+        getData();
+        function getData() {
+            $.ajax({
+                type: 'get',
+                url: '{{ route("posts.getData") }}',
+                success: function(res) {
+                    $.each(res, function(key, post) {
+                        let row = `
+                            <tr>
+                                <td>${post.id}</td>
+                                <td>${post.title}</td>
+                                <td>${post.content}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">Edit</button>
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                        $('#table_data tbody').append(row);
+                    })
+                }
+            })
+        }
 
         $('#form_data').submit(function(e) {
             e.preventDefault();
@@ -47,7 +82,19 @@
                     content: c
                 },
                 success: function(res) {
-                    console.log(res);
+                    let row = `
+                        <tr>
+                            <td>${res.post.id}</td>
+                            <td>${res.post.title}</td>
+                            <td>${res.post.content}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm">Edit</button>
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                    $('#table_data tbody').append(row);
+                    $('#form_data').trigger('reset');
                 },
                 error: function() {
 
