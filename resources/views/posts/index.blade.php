@@ -43,6 +43,25 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
+
+        $('#table_data').on('click', '.btn-delete', function() {
+            var id = $(this).data('id');
+            var btn = $(this);
+            // alert(id)
+            if(confirm('Are you Sure')) {
+                $.ajax({
+                    type: 'delete',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    url: '{{ route("posts.index") }}/' + id,
+                    success: function(res) {
+                        btn.parents('tr').remove();
+                    }
+                })
+            }
+        })
+
         getData();
         function getData() {
             $.ajax({
@@ -57,7 +76,7 @@
                                 <td>${post.content}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm">Edit</button>
-                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                    <button data-id="${post.id}" class="btn btn-danger btn-sm btn-delete">Delete</button>
                                 </td>
                             </tr>
                         `;
