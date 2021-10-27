@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->select('id', 'title', 'content')->get();
-        return response()->json(['status' => 'Ok', 'data' => $posts]);
+        return response()->json(['status' => 'Ok', 'content' => $posts]);
     }
 
     /**
@@ -33,6 +33,8 @@ class PostController extends Controller
         //     'title' => 'required',
         //     'content' => 'required',
         // ]);
+
+        // return $request->all();
 
         $validator = Validator::make($request->all(), [
             'title' => 'required',

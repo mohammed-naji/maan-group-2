@@ -58,6 +58,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     Route::resource('posts', PostController::class);
     Route::get('getData', [PostController::class, 'getData'])->name('posts.getData');
 
+    Route::get('ajax-file', [PostController::class, 'ajax_file']);
+    Route::post('ajax-file', [PostController::class, 'ajax_file_store'])->name('ajax_file_store');
+
 });
 
 // /post/{id}/comments/{user}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -87,5 +88,31 @@ class PostController extends Controller
     public function getData()
     {
         return Post::all();
+    }
+
+    public function ajax_file()
+    {
+        return view('posts.ajax_file');
+    }
+
+    public function ajax_file_store(Request $request)
+    {
+        // $request->validate([
+        //     'file' => 'required'
+        // ]);
+
+        $valid = Validator::make($request->all(), [
+            'file' => 'required'
+        ]);
+
+        if($valid->fails()) {
+            return '<div>File Field is required</div>';
+        }
+
+        $ex = $request->file('file')->getClientOriginalExtension();
+        $new_name = time().'_'.rand().'.'.$ex;
+        $request->file('file')->move(public_path('files'), $new_name);
+
+        return "<img src='". asset("files/$new_name") ."' />";
     }
 }
