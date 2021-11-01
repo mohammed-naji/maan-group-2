@@ -115,4 +115,10 @@ class PostController extends Controller
 
         return "<img src='". asset("files/$new_name") ."' />";
     }
+
+
+    public function posts_api()
+    {
+        return view('posts.posts_api');
+    }
 }
