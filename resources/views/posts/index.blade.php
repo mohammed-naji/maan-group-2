@@ -10,7 +10,7 @@
 <body>
 
     <div class="container my-5">
-
+        {{ $name }}
         <h2>Our posts</h2>
         <div class="row mt-4">
             <div class="col-4">

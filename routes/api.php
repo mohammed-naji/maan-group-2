@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\TodoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,8 @@ Route::prefix('v1')->group(function() {
 
     Route::get('sanctum', [PostController::class, 'sanctum'])->middleware('auth:sanctum');
     // Route::get('sanctum', [PostController::class, 'sanctum']);
+
+    Route::apiResource('todos', TodoController::class);
 
 });
 

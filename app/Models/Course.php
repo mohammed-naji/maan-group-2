@@ -13,4 +13,9 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function seo()
+    {
+        return $this->morphOne(Seo::class, 'seoable');
+    }
 }

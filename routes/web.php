@@ -7,6 +7,8 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PaymentController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
@@ -62,6 +64,23 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     Route::post('ajax-file', [PostController::class, 'ajax_file_store'])->name('ajax_file_store');
 
     Route::get('posts-api', [PostController::class, 'posts_api']);
+
+    Route::get('payment', [PaymentController::class, 'payment']);
+    Route::post('payment', [PaymentController::class, 'paymentSubmit'])->name('payment');
+
+    Route::get('payment2', [PaymentController::class, 'payment2']);
+    Route::get('payment2-success', [PaymentController::class, 'payment2_success'])->name('payment2_success');
+
+    // Route::get('todos', function() {
+    //     return view('todos.index');
+    // });
+
+    Route::view('todos', 'todos.index');
+
+    Route::get('/posts/create', [HomeController::class, 'create_post'])->name('create_post');
+    Route::post('/posts/create', [HomeController::class, 'create_post_submit']);
+
+    Route::get('/posts/show/{id}', [HomeController::class, 'show_post'])->name('show_post');
 
 });
 

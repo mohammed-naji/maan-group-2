@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Exports\ProductsExport;
 use App\Imports\ProductsImport;
 use App\Models\Post;
+use App\Models\Seo;
 use Maatwebsite\Excel\Facades\Excel;
 use Intervention\Image\Facades\Image;
 
@@ -64,5 +65,31 @@ class HomeController extends Controller
         // return view('blog', [
         //     'blogs' => $blogs
         // ]);
+    }
+
+    public function create_post()
+    {
+        return view('posts.create');
+    }
+
+    public function create_post_submit(Request $request)
+    {
+
+        $post = Post::create([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
+
+        // $seo = new Seo();
+        // $seo->add($seo);
+        Seo::add($post);
+
+        return redirect()->back()->with('success', 'Post Added');
+    }
+
+    public function show_post($id)
+    {
+        $post = Post::findOrFail($id);
+        return view('posts.show', compact('post'));
     }
 }
